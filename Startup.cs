@@ -4,10 +4,18 @@ namespace GitExercise
 {
     public class Startup
     {
+
         public static void Main()
         {
+            bool isAuthorized = ChechCredentials();
+            if (!isAuthorized)
+            {
+                Console.WriteLine("Access denied.");
+                Console.ReadKey(intercept: true);
+                return;
+            }
             Console.WriteLine("Console Calculator App");
-            Console.WriteLine(new string('-', 15));
+            Console.WriteLine(new string(c:'-', 15));
 
             Console.Write("a = ");
             double a = double.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
@@ -35,10 +43,24 @@ namespace GitExercise
                 case "m":
                     OptionsManager.Multiply(a, b);
                     break;
+                case "d":
+                    OptionsManager.Divide(a, b);
+                    break;
+                    OptionsManager.SubtractAbs(a, b);
+                    break;
             }
 
             Console.WriteLine("Pres any key to close the app...");
             Console.ReadKey(true);
+
         }
+        private static bool ChechCredentials()
+        {
+            Console.Write("Enter password to gain access: ");
+            string password = Console.ReadLine();
+            Console.Clear();
+            return password == Password;
+        }
+        private const string Password = "abcd1234";
     }
 }
